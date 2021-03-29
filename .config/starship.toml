@@ -1,0 +1,6 @@
+[cmd_duration]
+format = "run-time: [$duration](bold yellow)"
+
+[git_status]
+untracked = "."
+conflicted = "!"
