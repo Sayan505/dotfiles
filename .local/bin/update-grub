@@ -1,8 +1,0 @@
-# /etc/default/grub
-# Configuration for GRUB itself is defined in /etc/default/grub. The default options used when creating new entries for Fedora can also be found here.
-
-# /etc/grub.d/
-# Files in /etc/grub.d are used as templates for creating new GRUB entries as well as custom boot entries.
-
-# UEFI only
-grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
