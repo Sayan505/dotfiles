@@ -1,6 +1,15 @@
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol   = "[➜](bold red)"
+vicmd_symbol   = "[↫](bold blue)"
+
+
 [cmd_duration]
-format = "run-time: [$duration](bold yellow)"
+format = "\nrun-time: [$duration](bold blue)"
+
 
 [git_status]
-untracked = "."
+style      = "bold blue"
+untracked  = "."
 conflicted = "!"
+modified   = "[~](bold yellow)"
