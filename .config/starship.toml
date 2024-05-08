@@ -13,3 +13,4 @@ style      = "bold blue"
 untracked  = "."
 conflicted = "!"
 modified   = "[~](bold yellow)"
+

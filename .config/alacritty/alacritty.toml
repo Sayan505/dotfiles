@@ -28,7 +28,7 @@ white   = '#FFFFFF'
 [window]
 title         = "Terminal"
 dynamic_title = false
-opacity       = 0.8
+opacity       = 0.75
 
 [font]
 normal      = { family = "Cascadia Mono", style = "Regular" }
@@ -40,3 +40,4 @@ size        = 11.5
 [cursor]
 style     = { shape = "Beam", blinking = "On" }
 thickness = 0.01
+
