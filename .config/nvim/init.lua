@@ -81,6 +81,20 @@ plugins = {
     end
   },
   {
+    'goolord/alpha-nvim',
+    dependencies = {
+        'nvim-tree/nvim-web-devicons',
+        'nvim-lua/plenary.nvim'
+    },
+    config = function ()
+        require'alpha'.setup(require'alpha.themes.dashboard'.config)
+        
+        local alpha = require'alpha'
+        local dashboard = require'alpha.themes.dashboard'
+        dashboard.section.buttons.val = { dashboard.button("f", "Open File Browser" , ":Telescope file_browser <CR>") }
+    end
+  },
+  {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
@@ -105,7 +119,7 @@ plugins = {
         },
         sections = {
           lualine_a = {"mode"},
-          lualine_b = {{ "branch", icon = "" }, "diff"},
+          lualine_b = {"branch", "diff"},
           lualine_c = {"filename"},
           lualine_x = {"encoding", { "fileformat", symbols = { unix = "LF", dos = "CRLF" } }, { "filetype", icons_enabled = false }},
           lualine_y = {},
@@ -138,6 +152,20 @@ plugins = {
     end
   },
   {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    config = function()
+      require("telescope").setup{
+        extensions = {
+          file_browser = {
+            hijack_netrw = false,
+          }
+        }
+      }
+      require("telescope").load_extension("file_browser")
+    end
+  },
+  {
     "junegunn/fzf", build = "./install --all"
   },
   {
@@ -156,13 +184,13 @@ plugins = {
           width = 25,
         },
         renderer = {
-          group_empty = true,
+          group_empty = false,
         },
         filters = {
           dotfiles = true,
         },
       })
-      vim.cmd("NvimTreeOpen")
+      --vim.cmd("NvimTreeOpen")
     end
   },
   {
@@ -177,7 +205,7 @@ plugins = {
     config = function()
       require("bufferline").setup{
         options = {
-          mode = "tabs",
+          --mode = "tabs",
           diagnostics = false
         }
       }
