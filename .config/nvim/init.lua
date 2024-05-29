@@ -81,16 +81,16 @@ plugins = {
     end
   },
   {
-    'goolord/alpha-nvim',
+    "goolord/alpha-nvim",
     dependencies = {
-        'nvim-tree/nvim-web-devicons',
-        'nvim-lua/plenary.nvim'
+        "nvim-tree/nvim-web-devicons",
+        "nvim-lua/plenary.nvim"
     },
     config = function ()
-        require'alpha'.setup(require'alpha.themes.dashboard'.config)
+        require"alpha".setup(require"alpha.themes.dashboard".config)
         
-        local alpha = require'alpha'
-        local dashboard = require'alpha.themes.dashboard'
+        local alpha = require"alpha"
+        local dashboard = require"alpha.themes.dashboard"
         dashboard.section.buttons.val = { dashboard.button("f", "Open File Browser" , ":Telescope file_browser <CR>") }
     end
   },
@@ -101,7 +101,7 @@ plugins = {
       require("lualine").setup(require("lualine").setup{
         options = {
           icons_enabled = true,
-          theme = "16color",
+          theme = "gruvbox",
           component_separators = { left = " ", right = " "},
           section_separators = { left = " ", right = " "},
           disabled_filetypes = {
@@ -217,18 +217,43 @@ plugins = {
     end
   },
   {
-    "slugbyte/lackluster.nvim",
+    --"slugbyte/lackluster.nvim",
+    "ellisonleao/gruvbox.nvim",
     lazy = false,
     priority = 1000,
     init = function()
-      vim.cmd.colorscheme("industry")
+      require("gruvbox").setup({
+        terminal_colors = true,
+        undercurl = true,
+        underline = true,
+        bold = true,
+        italic = {
+          strings = true,
+          emphasis = true,
+          comments = true,
+          operators = false,
+          folds = true,
+        },
+        strikethrough = true,
+        invert_selection = false,
+        invert_signs = false,
+        invert_tabline = false,
+        invert_intend_guides = false,
+        inverse = true,
+        contrast = "hard",
+        palette_overrides = {},
+        overrides = {},
+        dim_inactive = false,
+        transparent_mode = true,
+      })
+      vim.cmd.colorscheme("gruvbox")
 
       -- make bg transparent:
-      vim.cmd("hi Normal      guibg=NONE ctermbg=NONE")
-      vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
-      vim.cmd("hi LineNr      guibg=NONE ctermbg=NONE")
-      vim.cmd("hi SignColumn  guibg=NONE ctermbg=NONE")
-      vim.cmd("hi Terminal    guibg=NONE ctermbg=NONE")
+      --vim.cmd("hi Normal      guibg=NONE ctermbg=NONE")
+      --vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
+      --vim.cmd("hi LineNr      guibg=NONE ctermbg=NONE")
+      --vim.cmd("hi SignColumn  guibg=NONE ctermbg=NONE")
+      --vim.cmd("hi Terminal    guibg=NONE ctermbg=NONE")
     end
   }
 }
@@ -239,3 +264,4 @@ require("lazy").setup(plugins, opts)
 
 require"lspconfig".clangd.setup{}
 -- TODO: add language servers (require"lspconfig".*.setup{}) for all my favorite langs
+
