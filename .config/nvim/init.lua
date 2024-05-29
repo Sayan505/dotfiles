@@ -1,5 +1,7 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.cmd("aunmenu PopUp.How-to\\ disable\\ mouse")
+vim.cmd("aunmenu PopUp.-1-")
 
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -85,7 +87,7 @@ plugins = {
       require("lualine").setup(require("lualine").setup{
         options = {
           icons_enabled = true,
-          theme = "lackluster",
+          theme = "16color",
           component_separators = { left = " ", right = " "},
           section_separators = { left = " ", right = " "},
           disabled_filetypes = {
@@ -161,7 +163,7 @@ plugins = {
         },
       })
       vim.cmd("NvimTreeOpen")
-    end,
+    end
   },
   {
     "lewis6991/gitsigns.nvim",
@@ -170,7 +172,7 @@ plugins = {
     end
   },
   {
-    "akinsho/bufferline.nvim", tag = "4.6.1",
+    "akinsho/bufferline.nvim", version = "4.6.1",
     dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       require("bufferline").setup{
@@ -180,13 +182,18 @@ plugins = {
         }
       }
     end
+  }, {
+    "petertriho/nvim-scrollbar",
+    config = function()
+      require("scrollbar").setup()
+    end
   },
   {
     "slugbyte/lackluster.nvim",
     lazy = false,
     priority = 1000,
     init = function()
-      vim.cmd.colorscheme("lackluster")
+      vim.cmd.colorscheme("industry")
 
       -- make bg transparent:
       vim.cmd("hi Normal      guibg=NONE ctermbg=NONE")
@@ -194,7 +201,7 @@ plugins = {
       vim.cmd("hi LineNr      guibg=NONE ctermbg=NONE")
       vim.cmd("hi SignColumn  guibg=NONE ctermbg=NONE")
       vim.cmd("hi Terminal    guibg=NONE ctermbg=NONE")
-    end,
+    end
   }
 }
 require("lazy").setup(plugins, opts)
