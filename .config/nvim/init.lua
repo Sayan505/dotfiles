@@ -217,6 +217,11 @@ plugins = {
     end
   },
   {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = true
+  },
+  {
     --"slugbyte/lackluster.nvim",
     "ellisonleao/gruvbox.nvim",
     lazy = false,
@@ -264,4 +269,3 @@ require("lazy").setup(plugins, opts)
 
 require"lspconfig".clangd.setup{}
 -- TODO: add language servers (require"lspconfig".*.setup{}) for all my favorite langs
-
