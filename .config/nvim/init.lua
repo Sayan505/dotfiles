@@ -272,40 +272,61 @@ require"lspconfig".clangd.setup{}
 
 vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>",  { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "gI", "<cmd>lua vim.lsp.buf.hover()<CR>",       { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", ",", "<cmd>bnext<CR>",       { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", ".", "<cmd>bprevious<CR>",       { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<esc><esc>", "<cmd>nohlsearch<CR>",            { noremap = true, silent = true })
 
---    CONTROLS    --
--- find: /<searchterm>
--- find and replace: %s/<searchterm>/<replacewith>/g
+--------------------
+----  CONTROLS  ----
+--------------------
+
+-- LSP:
+--    lsp goto decl: gD
+--    lsp goto def: gd
+
+-- modesetting:
+--    normal mode (default): <esc>
+--    insert (edit) mode: i
+--    command mode (while outside insert mode): :
+--    visual mode: v
+--    visual block mode: ctrl v
+
+-- find: :/<searchterm>
+-- find next: n
+-- find prev: N
+-- find and replace: :%s/<searchterm>/<replacewith>/g
+-- clear searches: <esc><esc>
+
 -- undo: u
 -- redo: ctrl r
--- lsp goto decl: gD
--- lsp goto def: gd
--- lsp hover: gI
+
 -- copy (yank):
 --    copy current line: yy
 --    copy from cur till end: y$
 --    copy from start to cur: y^
 --    copy current symbol: yiw
+
 --  cut (delete):
 --    cut current line: dd
 --    cut from cur till end: d$
 --    cut from start to cur: d^
 --    cut current symbol: diw
+
 -- paste (put):
 --    paste before cur: P
 --    paste after cur: p
--- select mode:
---    visual mode: v
---    visual block mode: ctrl v
--- insert mode: i
--- save: w
--- save and quit: wq
--- discard and quit: q!
--- quit: q
--- tabs:
---    next tab: .
---    prev tab: ,
 
+-- save: :w
+-- save and quit: :wq
+-- quit: :q
+-- discard and quit: :q!
+
+-- tabs:
+--    next tab: :bn
+--    prev tab: :bp
+--    close tab without saving: :bd
+--    force close tab without saving: :bd!
+
+-- goto:
+--    line N in normal mode: NG
+--    line N in cmd mode: :N
+--    next instance of the current word: *
+--    prev instance of the current word: #
