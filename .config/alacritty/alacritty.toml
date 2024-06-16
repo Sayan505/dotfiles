@@ -29,6 +29,7 @@ white   = '#FFFFFF'
 title         = "Terminal"
 dynamic_title = false
 opacity       = 0.75
+dimensions    = { columns = 110, lines = 28 }
 
 [font]
 normal      = { family = "Cascadia Mono", style = "Regular" }
