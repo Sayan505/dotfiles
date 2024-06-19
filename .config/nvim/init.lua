@@ -28,8 +28,11 @@ vim.opt.tabstop       = 4
 vim.opt.expandtab     = true
 vim.opt.softtabstop   = 4
 vim.opt.shiftwidth    = 4
+vim.opt.cursorline    = true
 vim.opt.guicursor     = "n:hor20,i:ver25,c:ver25,a:blinkon1"
 vim.opt.termguicolors = true
+vim.opt.clipboard:append { 'unnamedplus' }
+
 
 plugins = {
   {
@@ -81,6 +84,23 @@ plugins = {
     end
   },
   {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter"
+    }
+  },
+  {
+    "kylechui/nvim-surround", version = "*",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects"
+    },
+    config = function()
+      require("nvim-surround").setup({})
+    end
+  },
+  {
     "goolord/alpha-nvim",
     dependencies = {
         "nvim-tree/nvim-web-devicons",
@@ -107,6 +127,7 @@ plugins = {
           disabled_filetypes = {
             statusline = {},
             winbar = {},
+            "NvimTree",
           },
           ignore_focus = {},
           always_divide_middle = true,
@@ -187,7 +208,7 @@ plugins = {
           group_empty = false,
         },
         filters = {
-          dotfiles = true,
+          dotfiles = false,
         },
       })
       --vim.cmd("NvimTreeOpen")
@@ -220,6 +241,29 @@ plugins = {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     config = true
+  },
+  {
+    "hiphish/rainbow-delimiters.nvim",
+    lazy = false,
+    config = function()
+      require("rainbow-delimiters.setup").setup {
+        highlight = {
+          'RainbowDelimiterBlue',
+          'RainbowDelimiterGreen',
+          'RainbowDelimiterViolet',
+          'RainbowDelimiterYellow',
+          'RainbowDelimiterOrange',
+          'RainbowDelimiterRed',
+          'RainbowDelimiterCyan',
+        }
+      }
+    end
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim", main = "ibl",
+    config = function()
+      require("ibl").setup()
+    end
   },
   {
     --"slugbyte/lackluster.nvim",
@@ -267,6 +311,7 @@ require("lazy").setup(plugins, opts)
 
 
 require"lspconfig".clangd.setup{}
+require'lspconfig'.pyright.setup{}
 -- TODO: add language servers (require"lspconfig".*.setup{}) for all my favorite langs
 
 
@@ -330,3 +375,8 @@ vim.api.nvim_set_keymap("n", "<esc><esc>", "<cmd>nohlsearch<CR>",            { n
 --    line N in cmd mode: :N
 --    next instance of the current word: *
 --    prev instance of the current word: #
+
+-- surround.nvim:
+--    highlight the text in visual mode, then
+--    S" or any symbol like '`<({[ etc
+
