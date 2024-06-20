@@ -11,7 +11,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
@@ -75,11 +75,12 @@ plugins = {
           "toml",
           "xml",
           "ini",
-          "properties"
+          "properties",
         },
         sync_install = false,
         highlight = { enable = true },
         indent = { enable = true },
+        update_focused_file = { enabled = true }
       })
     end
   },
@@ -127,7 +128,7 @@ plugins = {
           disabled_filetypes = {
             statusline = {},
             winbar = {},
-            "NvimTree",
+            "NvimTree"
           },
           ignore_focus = {},
           always_divide_middle = true,
@@ -135,7 +136,7 @@ plugins = {
           refresh = {
             statusline = 1000,
             tabline = 1000,
-            winbar = 1000,
+            winbar = 1000
           }
         },
         sections = {
@@ -179,7 +180,7 @@ plugins = {
       require("telescope").setup{
         extensions = {
           file_browser = {
-            hijack_netrw = false,
+            hijack_netrw = false
           }
         }
       }
@@ -194,22 +195,22 @@ plugins = {
     version = "*",
     lazy = false,
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
+      "nvim-tree/nvim-web-devicons"
     },
     config = function()
       require("nvim-tree").setup({
         sort = {
-          sorter = "case_sensitive",
+          sorter = "case_sensitive"
         },
         view = {
-          width = 25,
+          width = 25
         },
         renderer = {
-          group_empty = false,
+          group_empty = false
         },
         filters = {
-          dotfiles = false,
-        },
+          dotfiles = false
+        }
       })
       --vim.cmd("NvimTreeOpen")
     end
@@ -254,7 +255,7 @@ plugins = {
           'RainbowDelimiterYellow',
           'RainbowDelimiterOrange',
           'RainbowDelimiterRed',
-          'RainbowDelimiterCyan',
+          'RainbowDelimiterCyan'
         }
       }
     end
@@ -264,6 +265,42 @@ plugins = {
     config = function()
       require("ibl").setup()
     end
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify"
+    },
+    config = function()
+      require("noice").setup({
+        lsp = {
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true
+          },
+        },
+        presets = {
+          bottom_search = true,
+          command_palette = false,
+          long_message_to_split = true,
+          inc_rename = false,
+          lsp_doc_border = true
+        },
+        cmdline = {
+          enabled = true,
+          view = "cmdline",
+        }
+      })
+      require('notify').setup ({
+        background_colour = "#000000"
+      })
+    end
+  },
+  {
+    'akinsho/toggleterm.nvim', version = "*", config = true
   },
   {
     --"slugbyte/lackluster.nvim",
@@ -281,7 +318,7 @@ plugins = {
           emphasis = true,
           comments = true,
           operators = false,
-          folds = true,
+          folds = true
         },
         strikethrough = true,
         invert_selection = false,
@@ -293,7 +330,7 @@ plugins = {
         palette_overrides = {},
         overrides = {},
         dim_inactive = false,
-        transparent_mode = true,
+        transparent_mode = true
       })
       vim.cmd.colorscheme("gruvbox")
 
@@ -311,72 +348,141 @@ require("lazy").setup(plugins, opts)
 
 
 require"lspconfig".clangd.setup{}
-require'lspconfig'.pyright.setup{}
+require"lspconfig".pyright.setup{}
 -- TODO: add language servers (require"lspconfig".*.setup{}) for all my favorite langs
+-- ref: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- ref: https://microsoft.github.io/language-server-protocol/implementors/servers/
 
 
-vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>",  { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<esc><esc>", "<cmd>nohlsearch<CR>",            { noremap = true, silent = true })
+
+
+vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>",  { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>",   { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<esc><esc>", "<cmd>nohlsearch<CR>",             { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader><space>", "<cmd>Telescope<CR>",         { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>b", "<cmd>Telescope file_browser<CR>",  { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>Telescope fd<CR>",            { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>Telescope live_grep<CR>",     { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>ToggleTerm size=7 dir=.<CR>", { noremap = true, silent = true })
+
 
 --------------------
 ----  CONTROLS  ----
 --------------------
 
+-- <leader>: \
+--    open :Telescope: <leader><space>
+--    open :Telescope file_browser: <leader>b
+--    open :Telescope fd (find file): <leader>s
+--    open :Telescope live_grep (ripgrep): <leader>f
+--    ToggleTerm in current dir (terminal): <leader>t
+--    switch out of terminal pane: <C-w><up>
+--    go to normal mode in terminal: <C-\><C-n>
+
 -- LSP:
 --    lsp goto decl: gD
 --    lsp goto def: gd
+--    lsp hover: K
+--    lsp hover scroll: KK
+
+-- surround.nvim:
+--    highlight the text in visual mode, then
+--    S" or any symbol like '`<({[ etc
+
+--  nvim-tree:
+--    navigate: <up> <down>
+--    cd: <C-]>
+--    open: <CR>
+--    open in system: s
+--    preview: <tab>
+--    back: <backspace>
+--    goto parent dir: P
+--    collapse all: W
+--    expand all: E
+--    toggle hidden: H
+--    toggle gitignored: I
+--    refresh: R
+--    rename: r
+--    rename basename: e
+--    rename mv (abs move): u
+--    create: a
+--    copy: c
+--    cut: x
+--    paste: p
+--    move to trash: D
+--    delete permanently: d
+--    copy relative path: Y
+--    copy abs path: gy
+--    copy name: y
 
 -- modesetting:
 --    normal mode (default): <esc>
 --    insert (edit) mode: i
 --    command mode (while outside insert mode): :
 --    visual mode: v
---    visual block mode: ctrl v
+--    visual block mode: <C-V>
 
 -- find: :/<searchterm>
 -- find next: n
 -- find prev: N
--- find and replace: :%s/<searchterm>/<replacewith>/g
+-- find and replace (all instances): :%s/<searchterm>/<replacewith>/g
 -- clear searches: <esc><esc>
+-- find next occurence of the word on cursor: *
+-- find prev occurence of the word on cursor: #
 
 -- undo: u
--- redo: ctrl r
+-- redo: <C-r>
+
+-- visual mode (v):
+--    select word: iw
+--    select from cur till end (end): $ OR <end>
+--    select from start to cur (home) : ^ OR <home>
+--    toggle uppercase-lowercase: <S-`>
 
 -- copy (yank):
 --    copy current line: yy
 --    copy from cur till end: y$
 --    copy from start to cur: y^
 --    copy current symbol: yiw
+--    copy selected from visual mode: y
+--    copy selected char: yl OR vy
 
 --  cut (delete):
 --    cut current line: dd
 --    cut from cur till end: d$
 --    cut from start to cur: d^
 --    cut current symbol: diw
+--    cut selected from visual mode: d
+--    cut selected char: dl OR vd OR x
+--    backspace key (cut): X
+--    delete key (cut): x
 
 -- paste (put):
 --    paste before cur: P
 --    paste after cur: p
 
 -- save: :w
--- save and quit: :wq
+-- save and quit: :wq OR :x
 -- quit: :q
+-- quit all: :qa
 -- discard and quit: :q!
+-- discard and quit all: :qa!
 
--- tabs:
---    next tab: :bn
---    prev tab: :bp
---    close tab without saving: :bd
---    force close tab without saving: :bd!
+-- buffers (as tabs):
+--    next buffer: :bn
+--    prev buffer: :bp
 
 -- goto:
---    line N in normal mode: NG
---    line N in cmd mode: :N
+--    line N: Ngg OR NG OR :N
 --    next instance of the current word: *
 --    prev instance of the current word: #
-
--- surround.nvim:
---    highlight the text in visual mode, then
---    S" or any symbol like '`<({[ etc
+--    pane N: N<C-w><C-w>
+--    pane up: <C-w><up>
+--    pane down: <C-w><down>
+--    pane left: <C-w><left>
+--    pane right: <C-w><right>
+--    end of file: <C-end>
+--    end of line: <end>
+--    start of file: <C-home>
+--    start of line: <home>
 
