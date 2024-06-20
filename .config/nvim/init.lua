@@ -375,8 +375,7 @@ vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>ToggleTerm size=7 dir=.<CR>", { 
 --    open :Telescope file_browser: <leader>b
 --    open :Telescope fd (find file): <leader>s
 --    open :Telescope live_grep (ripgrep): <leader>f
---    ToggleTerm in current dir (terminal): <leader>t
---    switch out of terminal pane: <C-w><up>
+--    ToggleTerm pane in current dir (terminal): <leader>t
 --    go to normal mode in terminal: <C-\><C-n>
 
 -- LSP:
