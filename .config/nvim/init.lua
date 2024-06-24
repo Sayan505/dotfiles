@@ -261,12 +261,6 @@ plugins = {
     end
   },
   {
-    "lukas-reineke/indent-blankline.nvim", main = "ibl",
-    config = function()
-      require("ibl").setup()
-    end
-  },
-  {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = {
@@ -334,6 +328,9 @@ plugins = {
       })
       vim.cmd.colorscheme("gruvbox")
 
+      -- cursorline: gruvbox bg0
+      vim.cmd("hi CursorLine guibg=#282828")
+
       -- make bg transparent:
       --vim.cmd("hi Normal      guibg=NONE ctermbg=NONE")
       --vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
@@ -347,11 +344,12 @@ require("lazy").setup(plugins, opts)
 
 
 
-require"lspconfig".clangd.setup{}
-require"lspconfig".pyright.setup{}
--- TODO: add language servers (require"lspconfig".*.setup{}) for all my favorite langs
--- ref: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+require"lspconfig".clangd.setup{}    -- dnf install clang-tools-extra
+require"lspconfig".pyright.setup{}   -- npm i -g pyright
+require"lspconfig".tsserver.setup{}  -- npm i -g typescript-language-server
+-- CHORE: add language servers (require"lspconfig".*.setup{}) for all my favorite langs
 -- ref: https://microsoft.github.io/language-server-protocol/implementors/servers/
+-- ref: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
 
 
@@ -375,7 +373,8 @@ vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>ToggleTerm size=7 dir=.<CR>", { 
 --    open :Telescope file_browser: <leader>b
 --    open :Telescope fd (find file): <leader>s
 --    open :Telescope live_grep (ripgrep): <leader>f
---    ToggleTerm pane in current dir (terminal): <leader>t
+--    ToggleTerm in current dir (terminal): <leader>t
+--    switch out of terminal pane: <C-w><up>
 --    go to normal mode in terminal: <C-\><C-n>
 
 -- LSP:
@@ -383,6 +382,8 @@ vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>ToggleTerm size=7 dir=.<CR>", { 
 --    lsp goto def: gd
 --    lsp hover: K
 --    lsp hover scroll: KK
+--    lsp off: lua vim.diagnostic.disable()
+--    lsp on: lua vim.diagnostic.enable()
 
 -- surround.nvim:
 --    highlight the text in visual mode, then
@@ -390,6 +391,7 @@ vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>ToggleTerm size=7 dir=.<CR>", { 
 
 --  nvim-tree:
 --    navigate: <up> <down>
+--    search: S
 --    cd: <C-]>
 --    open: <CR>
 --    open in system: s
@@ -417,6 +419,7 @@ vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>ToggleTerm size=7 dir=.<CR>", { 
 -- modesetting:
 --    normal mode (default): <esc>
 --    insert (edit) mode: i
+--    append (edit) mode: a
 --    command mode (while outside insert mode): :
 --    visual mode: v
 --    visual block mode: <C-V>
@@ -437,6 +440,7 @@ vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>ToggleTerm size=7 dir=.<CR>", { 
 --    select from cur till end (end): $ OR <end>
 --    select from start to cur (home) : ^ OR <home>
 --    toggle uppercase-lowercase: <S-`>
+--    shift-indent current selection/line: >> OR <<
 
 -- copy (yank):
 --    copy current line: yy
