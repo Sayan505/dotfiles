@@ -20,6 +20,7 @@ vim.opt.rtp:prepend(lazypath)
 
 
 
+vim.opt.ignorecase    = true
 vim.opt.number        = true
 vim.opt.swapfile      = false
 vim.opt.backup        = false
@@ -212,7 +213,6 @@ plugins = {
           dotfiles = false
         }
       })
-      --vim.cmd("NvimTreeOpen")
     end
   },
   {
@@ -222,17 +222,17 @@ plugins = {
     end
   },
   {
-    "akinsho/bufferline.nvim", version = "4.6.1",
+    "akinsho/bufferline.nvim", version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       require("bufferline").setup{
         options = {
-          --mode = "tabs",
           diagnostics = false
         }
       }
     end
-  }, {
+  },
+  {
     "petertriho/nvim-scrollbar",
     config = function()
       require("scrollbar").setup()
@@ -275,6 +275,12 @@ plugins = {
             ["vim.lsp.util.stylize_markdown"] = true,
             ["cmp.entry.get_documentation"] = true
           },
+          signature = {
+            enabled = true,
+            auto_open = {
+              enabled = false
+            }
+          }
         },
         presets = {
           bottom_search = true,
@@ -286,6 +292,15 @@ plugins = {
         cmdline = {
           enabled = true,
           view = "cmdline",
+          ---@type table<string, CmdlineFormat>
+          format = {
+            cmdline = false,
+            search_down = false,
+            search_up = false,
+            filter = false,
+            lua = false,
+            help = false
+          }
         }
       })
       require('notify').setup ({
